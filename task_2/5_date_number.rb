@@ -3,14 +3,10 @@ month_array = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 puts "Введите число, месяц, год через запятую."
 date_arr = gets.split(",")
 
-result = date_arr[0].to_i
-mm = date_arr[1].to_i
-yy = date_arr[2].to_i
+day = date_arr[0].to_i
+month = date_arr[1].to_i
+year = date_arr[2].to_i
 
-for i in 0..(mm-2) do
-  result += month_array[i]
-end
+month_array[1] = 29 if year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0)  
 
-result += 1 if yy%400 == 0 || (yy%4 == 0 && yy%100 != 0)  
-
-puts "Порядковый номер даты: #{result}" 
+puts "Порядковый номер даты: #{ day + month_array.take(month-1). sum }" 
