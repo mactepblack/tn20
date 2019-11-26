@@ -9,4 +9,4 @@ year = date_arr[2].to_i
 
 month_array[1] = 29 if year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0)  
 
-puts "Порядковый номер даты: #{ day + month_array.take(month-1). sum }" 
+puts "Порядковый номер даты: #{ day + month_array.take(month-1).sum }" 
