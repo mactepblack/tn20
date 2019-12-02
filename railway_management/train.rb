@@ -18,7 +18,7 @@ class Train
   end
 
   def stopped?
-    speed == 0
+    speed.zero?
   end
 
   def add_carriage
@@ -31,7 +31,7 @@ class Train
 
   def remove_carriage
     if stopped?
-      carriages_count -= 1
+      carriages_count -= 1 unless carriages_count.zero?
     else
       puts "Нельзя отцеплять вагоны во время движения!"
     end
@@ -39,16 +39,16 @@ class Train
 
   def add_route(route)
     self.route = route
-    station = route.stations_list.first
+    station = route.stations.first
     station.accept_train(self)
   end
 
   def previous_station
-    route.stations_list[station - 1]
+    route.stations[route.stations.index(station) - 1]
   end
      
   def next_station
-    route.stations_list[station + 1]
+    route.stations[route.stations.index(station) + 1]
   end 
 
   def move_forward

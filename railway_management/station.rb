@@ -3,29 +3,29 @@ class Station
 
   def initialize(name)
     @name = name
-    @trains_list = []
+    @trains = []
   end
 
   def accept_train(train)
-    @trains_list << train
+    @trains << train
 
     puts "На станцию #{name} прибыл поезд №#{train.number}"
   end
 
-  def puts_trains_list
+  def puts_trains
     puts "На станции #{self.name} находятся следующие поезда:"
 
-    @trains_list.each { |train| puts "Поезд №#{train.number}" }
+    @trains.each { |train| puts "Поезд №#{train.number}" }
   end
 
-  def puts_trains_list_by_type(type)
+  def puts_trains_by_type(type)
     puts "На станции #{self.name} находятся следующие поезда типа #{type}:"
 
-    @trains_list.each { |train| puts "Поезд №#{train.number}" if train.type == type }
+    @trains.each { |train| puts "Поезд №#{train.number}" if train.type == type }
   end
 
   def send_train(train)
-    @trains_list.delete(train)
+    @trains.delete(train)
 
     puts "Со станции #{self.name} убыл поезд №#{train.number}"
   end
