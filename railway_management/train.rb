@@ -1,11 +1,9 @@
 class Train
-  attr_reader :number, :type
-  attr_accessor :speed, :route, :station
+  attr_reader :number, :speed, :route, :station, :type, :carriages
 
-  def initialize(number, type, carriages_count = 0)
+  def initialize(number, carriages_count = 0)
     @number = number
-    @type = type
-    @carriages_count = carriages_count
+    @carriages = []
     @speed = 0
   end
 
@@ -21,17 +19,17 @@ class Train
     speed.zero?
   end
 
-  def add_carriage
+  def add_carriage(carriage)
     if stopped?
-      carriages_count += 1
+      carriage.type == self.type ? carriages << carriage : "Различаются типы поезда и вагона"
     else
       puts "Нельзя прицеплять вагоны во время движения!"
     end
   end
 
-  def remove_carriage
+  def remove_carriage(carriage)
     if stopped?
-      carriages_count -= 1 unless carriages_count.zero?
+      carriages.include(carriage) ? carriages.delete(carriage) : "В составе поезда нет этого вагона"
     else
       puts "Нельзя отцеплять вагоны во время движения!"
     end
@@ -65,5 +63,12 @@ class Train
       station = previous_station
       station.accept_train(self)      
     end
-  end 
+  end
+
+  private
+
+  # чтобы нельзя было изменить значения атрибутов через установку напрямую
+  attr_writer :speed, :route, :station
+
+  #больше ничего, что можно вывести в секцию private в голову не приходит
 end
