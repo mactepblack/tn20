@@ -6,22 +6,41 @@ require_relative 'station'
 require_relative 'carriage'
 require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
+require_relative 'railway_management'
 
-menu = [
-  "1 - Создать станцию",
-  "2 - Создать поезд",
-  "3 - Создать маршрут и управлять станциями в нем (добавлять, удалять)",
-  "4 - Назначить маршрут поезду",
-  "5 - Добавить вагоны к поезду",
-  "6 - Отцепить вагоны от поезда",
-  "7 - Перемещать поезд по маршруту вперед и назад",
-  "8 - Просматривать список станций и список поездов на станции",
-  "9 - Отобразить список команд",
-  "0 - Выйти" 
-]
+railway = RailwayManagement.new
+
+puts "Вас приветствует система управления железнодорожным движением."
+
+railway.options_available
 
 loop do
-  action = gets.chomp.to_i
+  puts "Выберите пункт меню (0-9):"
 
-  break if action.zero?
+  case gets.chomp.to_i 
+  
+  when 0
+    break
+  when 1
+    railway.create_station
+  when 2
+    railway.create_train
+  when 3
+    railway.create_route
+  when 4
+    #назначить маршрут поезду
+  when 5
+    #добавить вагоны к поезду
+  when 6
+    #отцепить вагоны от поезда
+  when 7
+    #перемещать поезд по маршруту вперед и назад
+  when 8
+    #просматривать список станций и список поездов на станции
+  when 9
+    railway.options_available
+  else
+    puts "Ошибка ввода: необходимо использовать цифры 0-9\n" \
+      "Вы можете ввести 9 для просмотра доступных опций"
+  end
 end

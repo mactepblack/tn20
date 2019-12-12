@@ -15,5 +15,9 @@ class Route
 
   def puts_stations
     stations.each { |station| puts station.name }
+  end
+
+  def name
+    stations.first.name + " - " + stations.last.name
   end  
 end
