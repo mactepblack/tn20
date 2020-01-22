@@ -65,6 +65,10 @@ class Train
     end
   end
 
+  def puts_carriages
+    self.carriages.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.number}" }
+  end
+
   private
 
   # чтобы нельзя было изменить значения атрибутов через установку напрямую

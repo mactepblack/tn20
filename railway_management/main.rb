@@ -8,39 +8,34 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'railway_management'
 
-railway = RailwayManagement.new
-
 puts "Вас приветствует система управления железнодорожным движением."
 
-railway.options_available
+RailwayManagement.options_available
 
 loop do
-  puts "Выберите пункт меню (0-9):"
+  puts "Выберите пункт меню 1-9, 0 - выход:"
 
   case gets.chomp.to_i 
   
   when 0
     break
   when 1
-    railway.create_station
+    RailwayManagement.create_station
   when 2
-    railway.create_train
+    RailwayManagement.create_train
   when 3
-    railway.create_route
+    RailwayManagement.route_management
   when 4
-    #назначить маршрут поезду
+    RailwayManagement.train_add_route
   when 5
-    #добавить вагоны к поезду
+    RailwayManagement.train_add_carriage
   when 6
-    #отцепить вагоны от поезда
+    RailwayManagement.train_remove_carriage
   when 7
-    #перемещать поезд по маршруту вперед и назад
+    RailwayManagement.move_train
   when 8
-    #просматривать список станций и список поездов на станции
+    RailwayManagement.stations_info
   when 9
-    railway.options_available
-  else
-    puts "Ошибка ввода: необходимо использовать цифры 0-9\n" \
-      "Вы можете ввести 9 для просмотра доступных опций"
+    RailwayManagement.options_available
   end
 end

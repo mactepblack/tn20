@@ -14,7 +14,7 @@ class Route
   end
 
   def puts_stations
-    stations.each { |station| puts station.name }
+    stations.each.with_index(1) { |station, index| puts "#{index} - #{station.name}" }
   end
 
   def name
