@@ -10,7 +10,9 @@ require_relative 'railway_management'
 
 puts "Вас приветствует система управления железнодорожным движением."
 
-RailwayManagement.options_available
+railway = RailwayManagement.new
+
+railway.options_available
 
 loop do
   puts "Выберите пункт меню 1-9, 0 - выход:"
@@ -20,22 +22,22 @@ loop do
   when 0
     break
   when 1
-    RailwayManagement.create_station
+    railway.create_station
   when 2
-    RailwayManagement.create_train
+    railway.create_train
   when 3
-    RailwayManagement.route_management
+    railway.route_management
   when 4
-    RailwayManagement.train_add_route
+    railway.train_add_route
   when 5
-    RailwayManagement.train_add_carriage
+    railway.train_add_carriage
   when 6
-    RailwayManagement.train_remove_carriage
+    railway.train_remove_carriage
   when 7
-    RailwayManagement.move_train
+    railway.move_train
   when 8
-    RailwayManagement.stations_info
+    railway.stations_info
   when 9
-    RailwayManagement.options_available
+    railway.options_available
   end
 end

@@ -29,7 +29,7 @@ class Train
 
   def remove_carriage(carriage)
     if stopped?
-      carriages.include(carriage) ? carriages.delete(carriage) : "В составе поезда нет этого вагона"
+      carriages.include?(carriage) ? carriages.delete(carriage) : "В составе поезда нет этого вагона"
     else
       puts "Нельзя отцеплять вагоны во время движения!"
     end
