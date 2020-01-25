@@ -32,6 +32,12 @@ class RailwayManagement
     stations.each.with_index(1) { |station, index| puts "#{index} - #{station.name}" }
   end
 
+  def select_station
+    self.puts_stations
+
+    stations[gets.chomp.to_i - 1]
+  end
+
   def options_available
     puts "Доступные опции:"
 
@@ -83,13 +89,13 @@ class RailwayManagement
   end
 
   def route_management
-    puts "Создаем начальную станцию:"
+    puts "Выберите начальную станцию:"
 
-    first_station = self.create_station
+    first_station = self.select_station
 
-    puts "Создаем конечную станцию:"
+    puts "Выберите конечную станцию:"
 
-    last_station = self.create_station
+    last_station = self.select_station
 
     route = Route.new(first_station, last_station)
 
@@ -105,7 +111,9 @@ class RailwayManagement
       when 0
         return
       when 1
-        station = self.create_station
+        puts "Выберите станцию добавляемую станцию:"
+
+        station = self.select_station
 
         route.add_station(station)
 
