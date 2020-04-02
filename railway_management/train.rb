@@ -1,8 +1,11 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
+require_relative 'validation'
 
 class Train
   attr_reader :number, :speed, :route, :station, :type, :carriages
+
+  NUMBER_FORMAT = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
 
   @@trains = {}
 
@@ -12,11 +15,14 @@ class Train
 
   include Manufacturer
   include InstanceCounter
+  include Validation
 
   def initialize(number, carriages_count = 0)
     @number = number
     @carriages = []
     @speed = 0
+
+    validate!
 
     @@trains[number] = self
 
@@ -83,6 +89,14 @@ class Train
 
   def puts_carriages
     self.carriages.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.number}" }
+  end
+
+  protected
+
+  def validate!
+    raise "Номер не может быть пустым!" if number.nil?
+    raise "Минимальная длина номера - 5 символов!" if number.length < 5
+    raise "Введенный номер неверного формата!" if number !~ NUMBER_FORMAT
   end
 
   private

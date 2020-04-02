@@ -67,25 +67,37 @@ class RailwayManagement
   end
 
   def create_train
-    puts "Введите номер поезда:"
+    begin
+      puts "Введите номер поезда:"
 
-    number = gets.chomp
+      number = gets.chomp
 
-    puts "Выберите тип поезда: 1 - товарный, 2 - пассажирский";
+      begin
+        puts "Выберите тип поезда: 1 - товарный, 2 - пассажирский"
 
-    type = gets.chomp.to_i
+        type = gets.chomp.to_i
 
-    if type == 1
-      trains << CargoTrain.new(number)
+        raise ArgumentError until (1..2).include?(type)
+      rescue
+        puts "Ошибка создания поезда :неверно указан тип."
 
-      puts "Создан товарный поезд №#{number}"
-    elsif type == 2
-      trains << PassengerTrain.new(number)
+        retry
+      end  
 
-      puts "Создан пассажирский поезд №#{number}"
-    else
-      puts "Ошибка создания поезда :неверно указан тип."
-    end      
+      if type == 1
+        trains << CargoTrain.new(number)
+
+        puts "Создан товарный поезд №#{number}"
+      elsif type == 2
+        trains << PassengerTrain.new(number)
+
+        puts "Создан пассажирский поезд №#{number}"
+      end
+    rescue RuntimeError
+      puts "Ошибка создания поезда: введенный номер #{number} не валидный."
+
+      retry
+    end
   end
 
   def route_management

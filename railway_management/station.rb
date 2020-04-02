@@ -1,4 +1,5 @@
 require_relative 'instance_counter'
+require_relative 'validation'
 
 class Station
   attr_reader :name
@@ -10,10 +11,13 @@ class Station
   end
 
   include InstanceCounter
+  include Validation
 
   def initialize(name)
     @name = name
     @trains = []
+
+    validate!
 
     @@stations << self
 
@@ -42,5 +46,12 @@ class Station
     @trains.delete(train)
 
     puts "Со станции #{self.name} убыл поезд №#{train.number}"
+  end
+
+  protected
+
+  def validate!
+    raise "Название не должно быть пустым!" if name.nil?
+    raise "Длина названия не должна быть нулевой!" if name.length < 1
   end
 end
