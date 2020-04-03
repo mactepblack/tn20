@@ -16,7 +16,7 @@ class Carriage
   protected
 
   def validate!
-    raise "Номер не может быть пустым!" if number.nil?
+    raise "Номер не может быть пустым!" unless number
     raise "Длина номера не может нулевой!" if number.length < 1
   end
 end

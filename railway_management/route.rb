@@ -34,7 +34,7 @@ class Route
   protected
 
   def validate!
-    raise "Аргумент 1 не является станцией!" if first_station.class.name != "Station"
-    raise "Аргумент 2 не является станцией!" if last_station.class.name != "Station"
+    raise "Аргумент 1 не является станцией!" if first_station.is_a? Station
+    raise "Аргумент 2 не является станцией!" if last_station.is_a? Station
   end  
 end

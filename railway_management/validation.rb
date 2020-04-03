@@ -4,7 +4,7 @@ module Validation
   end
 
   module InstanceMethods
-    def valide?
+    def valid?
       self.validate!
 
       true
