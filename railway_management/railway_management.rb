@@ -3,15 +3,18 @@ class RailwayManagement
 
   def initialize
     @options = [
-        "1 - Создать станцию",
-        "2 - Создать поезд",
-        "3 - Создать маршрут и управлять станциями в нем (добавлять, удалять)",
-        "4 - Назначить маршрут поезду",
-        "5 - Добавить вагоны к поезду",
-        "6 - Отцепить вагоны от поезда",
-        "7 - Перемещать поезд по маршруту вперед и назад",
-        "8 - Просматривать список станций и список поездов на станции",
-        "9 - Отобразить список команд",
+        "1  - Создать станцию",
+        "2  - Создать поезд",
+        "3  - Создать маршрут и управлять станциями в нем (добавлять, удалять)",
+        "4  - Назначить маршрут поезду",
+        "5  - Добавить вагоны к поезду",
+        "6  - Отцепить вагоны от поезда",
+        "7  - Перемещать поезд по маршруту вперед и назад",
+        "8  - Просматривать список станций и список поездов на станции",
+        "9  - Отобразить список команд",
+        "10 - Вывести список вагонов поезда",
+        "11 - Вывести список поездов на станции",
+        "12 - Занять место или объем в вагоне",
         "0 - Выйти" 
       ]
 
@@ -162,9 +165,17 @@ class RailwayManagement
     number = gets.chomp
 
     if train.type == "passenger"
-      carriage = PassengerCarriage.new(number)
+      puts "Введите количество мест в вагоне:"
+
+      seats = gets.chomp.to_i
+
+      carriage = PassengerCarriage.new(number, seats)
     else
-      carriage = CargoTrain.new(number)
+      puts "Введите емкость вагона:"
+
+      capacity = gets.chomp.to_i
+
+      carriage = CargoTrain.new(number, capacity)
     end
 
     train.add_carriage(carriage)
@@ -208,5 +219,51 @@ class RailwayManagement
     unless number.zero?
       stations[number - 1].puts_trains
     end
+  end
+
+  def train_carriages_list
+    block = proc do |carriage|
+      message = "Вагон №#{carriage.number}, тип #{carriage.type}, "
+
+      if carriage.type == "passenger"
+        message += "свободно #{carriage.seats_available} мест, занято #{carriage.seats_taken}"
+      else
+        message += "свободно #{carriage.capacity_available} объема, занято #{carriage.capacity_taken}"
+      end
+
+      puts message  
+    end
+
+    train = self.select_train
+
+    train.each_carriage_do(block)
+  end
+
+  def station_trains_list
+    block = proc do |train|
+      puts "Поезд №#{train.number}, тип #{train.type}, вагонов #{train.carriages.count}"
+    end
+
+    station = self.select_station
+
+    station.each_train_do(block)
+  end
+
+  def fill_carriage
+    train = self.select_train
+
+    puts "Выберите заполняемый вагон:"
+
+    train.puts_carriages
+
+    carriage = train.carriages[gets.chomp.to_i - 1]
+
+    if carriage.type = "passenger"
+      carriage.take_seat
+    else
+      puts "Введите заполняемый объем:"
+
+      carriage.take_capacity(gets.chomp.to_i)
+    end      
   end  
 end

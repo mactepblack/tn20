@@ -15,7 +15,7 @@ railway = RailwayManagement.new
 railway.options_available
 
 loop do
-  puts "Выберите пункт меню 1-9, 0 - выход:"
+  puts "Выберите пункт меню 1-12, 0 - выход:"
 
   case gets.chomp.to_i 
   
@@ -39,5 +39,11 @@ loop do
     railway.stations_info
   when 9
     railway.options_available
+  when 10
+    railway.train_carriages_list
+  when 11
+    railway.staion_trains_list
+  when 12
+    railway.fill_carriage  
   end
 end

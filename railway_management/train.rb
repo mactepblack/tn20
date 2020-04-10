@@ -91,6 +91,10 @@ class Train
     self.carriages.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.number}" }
   end
 
+  def each_carriage_do(block)
+    self.carriages.each { |carriage| block.call(carriage) }  
+  end
+
   protected
 
   def validate!
