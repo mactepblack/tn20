@@ -1,33 +1,24 @@
 require_relative 'carriage'
 
 class PassengerCarriage < Carriage
-  attr_reader :seats, :seats_available
+  def initialize(number, capacity)
+    super
 
-  def initialize(number, seats)
-    super(number)
+    capacity_validate!
 
-    @seats = seats
-
-    seats_validate!
-
-    @type = "passenger"    
-    @seats_available = seats
+    @type = "passenger"
   end
 
-  def take_seat
-    raise "Свободных мест нет" if self.seats_available.zero? 
+  def take_capacity
+    raise "Свободных мест нет" if self.capacity_available.zero? 
 
-    self.seats_available -= 1
-  end
-
-  def seats_taken
-    seats - seats_available
+    self.capacity_available -= 1
   end
 
   protected
 
-  def seats_validate!
-    raise "Количество мест должно быть целое число" unless self.seats.is_a? Integer
+  def capacity_validate!
+    raise "Количество мест должно быть целое число" unless self.capacity.is_a? Integer
   end
 
   private

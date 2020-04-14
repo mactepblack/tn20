@@ -222,7 +222,9 @@ class RailwayManagement
   end
 
   def train_carriages_list
-    block = proc do |carriage|
+    train = self.select_train
+
+    train.each_carriage do |carriage|
       message = "Вагон №#{carriage.number}, тип #{carriage.type}, "
 
       if carriage.type == "passenger"
@@ -231,22 +233,16 @@ class RailwayManagement
         message += "свободно #{carriage.capacity_available} объема, занято #{carriage.capacity_taken}"
       end
 
-      puts message  
+      puts message
     end
-
-    train = self.select_train
-
-    train.each_carriage_do(block)
   end
 
   def station_trains_list
-    block = proc do |train|
-      puts "Поезд №#{train.number}, тип #{train.type}, вагонов #{train.carriages.count}"
-    end
-
     station = self.select_station
 
-    station.each_train_do(block)
+    station.each_train do |train|
+      puts "Поезд №#{train.number}, тип #{train.type}, вагонов #{train.carriages.count}"
+    end
   end
 
   def fill_carriage

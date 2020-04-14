@@ -1,17 +1,12 @@
 require_relative 'carriage'
 
 class CargoCarriage < Carriage
-  attr_reader :capacity, :capacity_available
-
   def initialize(number, capacity)
-    super(number)
-
-    @capacity = capacity
+    super
 
     capacity_validate!
 
     @type = "cargo"
-    @capacity_available = capacity
   end
 
   def take_capacity(capacity)
@@ -20,13 +15,9 @@ class CargoCarriage < Carriage
     self.capacity_available -= capacity
   end
 
-  def capacity_taken
-    capacity - capacity_available    
-  end
-
   protected
 
-  def capacity_validate1!
+  def capacity_validate!
     raise "Емкость должна быть задана числом" unless capacity.is_a? Numeric
   end
 

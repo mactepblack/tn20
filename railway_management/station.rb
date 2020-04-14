@@ -48,8 +48,8 @@ class Station
     puts "Со станции #{self.name} убыл поезд №#{train.number}"
   end
 
-  def each_train_do(block)
-    self.trains.each { |train| block.call(train) }
+  def each_train(&block)
+    self.trains.each { |train| yield train }
   end
 
   protected
