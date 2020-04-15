@@ -48,7 +48,7 @@ class Station
     puts "Со станции #{self.name} убыл поезд №#{train.number}"
   end
 
-  def each_train(&block)
+  def each_train
     self.trains.each { |train| yield train }
   end
 

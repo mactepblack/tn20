@@ -228,7 +228,7 @@ class RailwayManagement
       message = "Вагон №#{carriage.number}, тип #{carriage.type}, "
 
       if carriage.type == "passenger"
-        message += "свободно #{carriage.seats_available} мест, занято #{carriage.seats_taken}"
+        message += "свободно #{carriage.capacity_available} мест, занято #{carriage.capacity_taken}"
       else
         message += "свободно #{carriage.capacity_available} объема, занято #{carriage.capacity_taken}"
       end

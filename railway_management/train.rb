@@ -91,7 +91,7 @@ class Train
     self.carriages.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.number}" }
   end
 
-  def each_carriage(&block)
+  def each_carriage
     self.carriages.each { |carriage| yield carriage }  
   end
 
