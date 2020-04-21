@@ -22,9 +22,7 @@ class PassengerCarriage < Carriage
   protected
 
   def capacity_validate!
-    unless capacity.is_a? Integer
-      raise 'Количество мест должно быть целое число'
-    end
+    raise 'Количество мест должно быть целое число' unless capacity.is_a? Integer
   end
 
   private

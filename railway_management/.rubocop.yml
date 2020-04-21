@@ -19,9 +19,6 @@ Metrics/MethodLength:
 Style/GuardClause:
   Enabled: false
 
-Style/IfUnlessModifier:
-  Enabled: false
-
 Metrics/ClassLength:
   Max: 181
 
