@@ -16,8 +16,6 @@ railway = RailwayManagement.new
 
 railway.options_available
 
-# rubocop: Block has too many lines
-# но как это исправить не знаю
 loop do
   puts 'Выберите пункт меню 1-12, 0 - выход:'
 

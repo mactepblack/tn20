@@ -12,9 +12,7 @@ class CargoCarriage < Carriage
   end
 
   def take_capacity(capacity)
-    if capacity > capacity_available
-      raise "Недостаточно свободного места (доступно #{capacity_available})"
-    end
+    return 'Недостаточно свободного места' if capacity > capacity_available
 
     self.capacity_available -= capacity
   end
