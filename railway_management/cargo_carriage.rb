@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'carriage'
 
 class CargoCarriage < Carriage
@@ -6,11 +8,13 @@ class CargoCarriage < Carriage
 
     capacity_validate!
 
-    @type = "cargo"
+    @type = 'cargo'
   end
 
   def take_capacity(capacity)
-    raise "Недостаточно свободного места (доступно #{self.capacity_available})" if capacity > self.capacity_available
+    if capacity > capacity_available
+      raise "Недостаточно свободного места (доступно #{capacity_available})"
+    end
 
     self.capacity_available -= capacity
   end
@@ -18,10 +22,10 @@ class CargoCarriage < Carriage
   protected
 
   def capacity_validate!
-    raise "Емкость должна быть задана числом" unless capacity.is_a? Numeric
+    raise 'Емкость должна быть задана числом' unless capacity.is_a? Numeric
   end
 
   private
 
-  attr_writer :capacity_available  
+  attr_writer :capacity_available
 end

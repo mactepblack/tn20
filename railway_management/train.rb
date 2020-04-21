@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'validation'
@@ -5,7 +7,7 @@ require_relative 'validation'
 class Train
   attr_reader :number, :speed, :route, :station, :type, :carriages
 
-  NUMBER_FORMAT = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
+  NUMBER_FORMAT = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i.freeze
 
   @@trains = {}
 
@@ -17,7 +19,7 @@ class Train
   include InstanceCounter
   include Validation
 
-  def initialize(number, carriages_count = 0)
+  def initialize(number, _carriages_count = 0)
     @number = number
     @carriages = []
     @speed = 0
@@ -34,7 +36,7 @@ class Train
   end
 
   def stop
-    speed = 0
+    self.speed = 0
   end
 
   def stopped?
@@ -43,17 +45,21 @@ class Train
 
   def add_carriage(carriage)
     if stopped?
-      carriage.type == self.type ? carriages << carriage : "Различаются типы поезда и вагона"
+      return 'Различаются типы поезда и вагона' if carriage.type != type
+
+      carriages << carriage
     else
-      puts "Нельзя прицеплять вагоны во время движения!"
+      puts 'Нельзя прицеплять вагоны во время движения!'
     end
   end
 
   def remove_carriage(carriage)
     if stopped?
-      carriages.include?(carriage) ? carriages.delete(carriage) : "В составе поезда нет этого вагона"
+      return 'У поезда нет указанного вагона' unless carriages.include?(carriage)
+
+      carriages.delete(carriage)
     else
-      puts "Нельзя отцеплять вагоны во время движения!"
+      puts 'Нельзя отцеплять вагоны во время движения!'
     end
   end
 
@@ -66,47 +72,46 @@ class Train
   def previous_station
     route.stations[route.stations.index(station) - 1]
   end
-     
+
   def next_station
     route.stations[route.stations.index(station) + 1]
-  end 
+  end
 
   def move_forward
-    unless ( next_station = self.next_station ).nil?
-      station.send_train(self)
-      station = next_station
-      station.accept_train(self)      
-    end
+    return if (next_station = self.next_station).nil?
+
+    station.send_train(self)
+    station = next_station
+    station.accept_train(self)
   end
 
   def move_back
-    unless ( previous_station = self.previous_station ).nil?
-      station.send_train(self)
-      station = previous_station
-      station.accept_train(self)      
-    end
+    return if (previous_station = self.previous_station).nil?
+
+    station.send_train(self)
+    station = previous_station
+    station.accept_train(self)
   end
 
   def puts_carriages
-    self.carriages.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.number}" }
+    carriages.each.with_index(1) do |carriage, index|
+      puts "#{index} - #{carriage.number}"
+    end
   end
 
   def each_carriage
-    self.carriages.each { |carriage| yield carriage }  
+    carriages.each { |carriage| yield carriage }
   end
 
   protected
 
   def validate!
-    raise "Номер не может быть пустым!" if number.nil?
-    raise "Минимальная длина номера - 5 символов!" if number.length < 5
-    raise "Введенный номер неверного формата!" if number !~ NUMBER_FORMAT
+    raise 'Номер не может быть пустым!' if number.nil?
+    raise 'Минимальная длина номера - 5 символов!' if number.length < 5
+    raise 'Введенный номер неверного формата!' if number !~ NUMBER_FORMAT
   end
 
   private
 
-  # чтобы нельзя было изменить значения атрибутов через установку напрямую
   attr_writer :speed, :route, :station
-
-  #больше ничего, что можно вывести в секцию private в голову не приходит
 end

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer'
 require_relative 'validation'
 
 class Carriage
-  attr_reader :number, :type, :capacity, :capacity_available
-
   include Manufacturer
   include Validation
+
+  attr_reader :number, :type, :capacity, :capacity_available
 
   def initialize(number, capacity)
     @number = number
@@ -22,8 +24,8 @@ class Carriage
   protected
 
   def validate!
-    raise "Номер не может быть пустым!" unless number
-    raise "Длина номера не может нулевой!" if number.length < 1
+    raise 'Номер не может быть пустым!' unless number
+    raise 'Длина номера не может нулевой!' if number.empty?
   end
 
   private

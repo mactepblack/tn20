@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'train'
 require_relative 'passenger_train'
 require_relative 'cargo_train'
@@ -8,17 +10,19 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'railway_management'
 
-puts "Вас приветствует система управления железнодорожным движением."
+puts 'Вас приветствует система управления железнодорожным движением.'
 
 railway = RailwayManagement.new
 
 railway.options_available
 
+# rubocop: Block has too many lines
+# но как это исправить не знаю
 loop do
-  puts "Выберите пункт меню 1-12, 0 - выход:"
+  puts 'Выберите пункт меню 1-12, 0 - выход:'
 
-  case gets.chomp.to_i 
-  
+  case gets.chomp.to_i
+
   when 0
     break
   when 1
@@ -44,6 +48,6 @@ loop do
   when 11
     railway.staion_trains_list
   when 12
-    railway.fill_carriage  
+    railway.fill_carriage
   end
 end

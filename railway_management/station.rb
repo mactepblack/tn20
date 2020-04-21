@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter'
 require_relative 'validation'
 
@@ -31,13 +33,13 @@ class Station
   end
 
   def puts_trains
-    puts "На станции #{self.name} находятся следующие поезда:"
+    puts "На станции #{name} находятся следующие поезда:"
 
     @trains.each { |train| puts "Поезд №#{train.number}" }
   end
 
   def puts_trains_by_type(type)
-    puts "На станции #{self.name} находятся следующие поезда типа #{type}:"
+    puts "На станции #{name} находятся следующие поезда типа #{type}:"
 
     @trains.each { |train| puts "Поезд №#{train.number}" if train.type == type }
   end
@@ -45,17 +47,17 @@ class Station
   def send_train(train)
     @trains.delete(train)
 
-    puts "Со станции #{self.name} убыл поезд №#{train.number}"
+    puts "Со станции #{name} убыл поезд №#{train.number}"
   end
 
   def each_train
-    self.trains.each { |train| yield train }
+    trains.each { |train| yield train }
   end
 
   protected
 
   def validate!
-    raise "Название не должно быть пустым!" if name.nil?
-    raise "Длина названия не должна быть нулевой!" if name.length < 1
+    raise 'Название не должно быть пустым!' if name.nil?
+    raise 'Длина названия не должна быть нулевой!' if name.empty?
   end
 end
